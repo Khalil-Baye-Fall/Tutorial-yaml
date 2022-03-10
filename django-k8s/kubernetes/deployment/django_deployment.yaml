@@ -1,3 +1,23 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    app: django1
+  name: django-pv1
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  hostPath:
+    path: /home/docker/Django-app
+    type: ""
+  persistentVolumeReclaimPolicy: Recycle
+  claimRef:
+    namespace: default
+    name: django-pv-claim6
+  volumeMode: Filesystem
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,7 +35,9 @@ spec:
         app: django-app
     spec:
       containers:
-      - name: django-app
-        image: bayefall93/django_kub:new1
-        ports:
-        - containerPort: 8000
+        - name: django-kube
+          imagePullPolicy: Always
+          image: bayefall93/django-kub:1.0.1
+          command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+          ports:
+          - containerPort: 8000

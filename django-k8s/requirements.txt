@@ -1,6 +1,6 @@
 Django
 django-cors-headers
-mysqlclient
+mysqlclient==1.4.6
 cryptography
 mysql-connector-python
 djangorestframework
